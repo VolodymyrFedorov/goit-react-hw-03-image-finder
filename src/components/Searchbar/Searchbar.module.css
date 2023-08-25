@@ -1,4 +1,4 @@
-.Searchbar {
+.searchbar {
   top: 0;
   left: 0;
   position: sticky;
@@ -19,10 +19,7 @@
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 
-/*
- * Стили компонента SearchForm
- */
-.SearchForm {
+.form {
   display: flex;
   align-items: center;
   width: 100%;
@@ -32,7 +29,7 @@
   overflow: hidden;
 }
 
-.SearchForm__button {
+.formButton {
   display: inline-block;
   width: 48px;
   height: 48px;
@@ -47,23 +44,11 @@
   outline: none;
 }
 
-.SearchForm__button:hover {
+.formButton:hover {
   opacity: 1;
 }
 
-.SearchForm__button__label {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  clip-path: inset(50%);
-  border: 0;
-}
-
-.SearchForm__input {
+.input {
   display: inline-block;
   width: 100%;
   font: inherit;
@@ -74,7 +59,7 @@
   padding-right: 4px;
 }
 
-.SearchForm__input::placeholder {
+.nput::placeholder {
   font: inherit;
   font-size: 18px;
 }

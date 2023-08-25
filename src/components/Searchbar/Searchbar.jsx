@@ -1,52 +1,36 @@
-import styles from './Searchbar.module.css';
 import { Component } from 'react';
-import { toast } from 'react-toastify';
+import css from './Searchbar.module.css';
 
-class Searchbar extends Component {
+export class Searchbar extends Component {
   state = {
-    search: '',
+    query: '',
   };
 
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({ [name]: value });
+  handleChangeInput = e => {
+    this.setState({ query: e.currentTarget.value.toLowerCase() });
   };
 
-  handleSubmit = evt => {
-    evt.preventDefault();
-    const { search } = this.state;
-    if (search.trim() === '') {
-      toast.error('Enter your search query');
-      return;
+  handleSubmitForm = e => {
+    e.preventDefault();
+    if (this.state.query.trim() === '') {
+      alert('Write a serches');
     }
-    const { onSubmit } = this.props;
-    onSubmit({ ...this.state });
-    this.reset();
+
+    this.props.onSubmit(this.state.query);
+    this.setState({ query: '' });
   };
 
-  reset() {
-    this.setState({
-      search: '',
-    });
-  }
   render() {
-    const { search } = this.state;
-    const { handleChange, handleSubmit } = this;
     return (
-      <header className={styles.Searchbar}>
-        <form className={styles.SearchForm} onSubmit={handleSubmit}>
-          <button type="submit" className={styles.SearchForm__button}>
-            <span className={styles.SearchForm__button__label}>Search</span>
-          </button>
+      <header className={css.searchbar}>
+        <form className={css.form} onSubmit={this.handleSubmitForm}>
+          <button type="submit" className={css.formButton}></button>
 
           <input
-            className={styles.SearchForm__input}
-            onChange={handleChange}
+            className={css.input}
             type="text"
-            name="search"
-            value={search}
-            autoComplete="off"
-            autoFocus
+            value={this.state.query}
+            onChange={this.handleChangeInput}
             placeholder="Search images and photos"
           />
         </form>
@@ -54,4 +38,3 @@ class Searchbar extends Component {
     );
   }
 }
-export default Searchbar;

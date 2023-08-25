@@ -1,16 +1,25 @@
-import styles from './ImageGalleryItem.module.css';
+import PropTypes from 'prop-types';
+import css from './ImageGalleryItem.module.css';
 
-const ImageGalleryItem = ({ webformatURL, largeImageURL, openModal }) => {
+export const ImageGalleryItem = ({ img, alt, onClick, bigImg }) => {
+  const handelClick = () => {
+    onClick(bigImg);
+  };
   return (
-    <li className={styles.ImageGalleryItem}>
+    <li className={css.imageGalleryItem} onClick={handelClick}>
       <img
-        className={styles.ImageGalleryItem__image}
-        src={webformatURL}
-        alt=""
-        onClick={() => openModal({ src: largeImageURL })}
+        className={css.imageGalleryItemImage}
+        src={img}
+        alt={alt}
+        width={320}
       />
     </li>
   );
 };
 
-export default ImageGalleryItem;
+ImageGalleryItem.propTypes = {
+  img: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  bigImg: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};

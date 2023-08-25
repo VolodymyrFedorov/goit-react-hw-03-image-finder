@@ -1,19 +1,19 @@
-import { RotatingLines } from 'react-loader-spinner';
-import styles from './Loader.module.css';
+import { MagnifyingGlass } from 'react-loader-spinner';
+import css from './Loader.module.css';
 
-const Loader = () => {
+export const Loader = () => {
   return (
-    <div className={styles.Overlay}>
-      <RotatingLines
-        className={styles.loader}
-        strokeColor="blue"
-        strokeWidth="5"
-        animationDuration="0.75"
-        width="96"
+    <div className={css.loader}>
+      <MagnifyingGlass
         visible={true}
+        height="80"
+        width="80"
+        ariaLabel="MagnifyingGlass-loading"
+        wrapperStyle={{}}
+        wrapperClass="MagnifyingGlass-wrapper"
+        glassColor="#c0efff"
+        color="#e15b64"
       />
     </div>
   );
 };
-
-export default Loader;
