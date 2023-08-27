@@ -5,7 +5,7 @@ import { Button } from 'components/Button/Button';
 import { Modal } from 'components/Modal/Modal';
 import { Searchbar } from 'components/Searchbar/Searchbar';
 import { ImageGallery } from 'components/ImageGallery/ImageGallery';
-import { getImages } from './services/api';
+import { getImages } from '../services/api';
 
 export class App extends Component {
   state = {
@@ -24,32 +24,27 @@ export class App extends Component {
     const nextQuery = this.state.query;
     const page = this.state.page;
 
-    if (prevQuery !== nextQuery || prevState.page !== page) {
-      this.setState({ loading: true, error: null });
-
-      getImages(nextQuery, page)
-        .then(res => {
-          if (res.status !== 200) {
-            return Promise.reject(new Error(`Oops, something went wrong...`));
-          } else return res.json();
-        })
-        .then(images => {
-          if (images.hits.length !== 0) {
-            return this.setState(prevState => ({
-              images: [...prevState.images, ...images.hits],
-              lastPage: page < Math.ceil(images.totalHits / 12),
-            }));
-          } else
-            return Promise.reject(
-              new Error(
-                `Sorry, there are no images matching your search query. Please try again`
-              )
-            );
-        })
-
-        .catch(error => this.setState({ error }))
-        .finally(() => this.setState({ loading: false }));
+    if (prevQuery === nextQuery && prevState.page === page) {
+      return;
     }
+
+    this.setState({ loading: true, error: null });
+
+    getImages(nextQuery, page)
+      .then(images => {
+        if (images.hits.length === 0) {
+          throw new Error(
+            `Sorry, there are no images matching your search query. Please try again`
+          );
+        }
+
+        this.setState(prevState => ({
+          images: [...prevState.images, ...images.hits],
+          lastPage: page < Math.ceil(images.totalHits / 12),
+        }));
+      })
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ loading: false }));
   }
 
   handleButtonClick = () => {
